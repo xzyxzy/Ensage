@@ -73,51 +73,55 @@ local shortest = 30000
 local rangestun = 325
 local name = entityList:GetMyHero().name
 local apoint = ((heroInfo[name].attackPoint*100)/(1+me.attackSpeed))*1000
-if v and v.visible and v.alive == true and v.health > 0 then
-	if v:IsChanneling() then
-		enemyspell = v:GetChanneledAbility()
-	end
-	for g,h in ipairs(familiars) do
-		local stone = h:FindModifier("modifier_visage_summon_familiars_stone_form_buff")
-		if not tablefam[h.handle] then
-			tablefam[h.handle] = {}
-		end
-		if not tablefam[h.handle].effectfam and h.alive == true and h.health > 0 then
-			tablefam[h.handle].effectfam = Effect(h,"range_display")
-			tablefam[h.handle].effectfam:SetVector(1,Vector(325,0,0))
-		end
-		if shortest > GetDistance2D(h,v) and h:GetAbility(1).cd == 0 and h.alive == true and h.health > 0 and not stone then
-			shortest = GetDistance2D(h,v)
-			selectedfam = h
-		end
-		if stone and h:GetAbility(1).cd > 24 then
-			mp:SelectAdd(h)
-		end
-	end
-end
-if selectedfam ~= nil and selectedfam.alive == true and selectedfam.health > 0 and v and v.visible and v.alive == true and v.health > 0 then
-	local totalrange = selectedfam.movespeed*0.5+rangestun
-	local spell = selectedfam:GetAbility(1)
-	local stone = selectedfam:FindModifier("modifier_visage_summon_familiars_stone_form_buff")
-	if (enemyspell and enemyspell ~= nil and enemyspell.channelTime ~= 0) then
-		if not stone and selectedfam.alive == true and selectedfam.health > 0 and GetDistance2D(selectedfam,v)-totalrange < (enemyspell:GetChannelTime(enemyspell.level)-enemyspell.channelTime-1.3)*selectedfam.movespeed and enemyspell.channelTime ~= 0 and selectedfam:GetAbility(1).cd < ((GetDistance2D(selectedfam,v)-totalrange)/selectedfam.movespeed) and ticktimer - movetimer > 2000 and ticktimer - stuntimer > 2000 then
-			mp:Unselect(selectedfam)
-			mpos = (v.position - selectedfam.position) * (GetDistance2D(selectedfam,v) - 320)	 / GetDistance2D(selectedfam,v) + selectedfam.position
-			selectedfam:Move(mpos)
-			movetimer = ticktimer
-		end
-		if stone and not selectedfam:GetAbility(1).cd == 0 and selectedfam.alive == true and selectedfam.health > 0 then
-			mp:SelectAdd(selectedfam)
-		end
-		if not stone  and selectedfam.alive == true and selectedfam.health > 0 and GetDistance2D(selectedfam,v) < totalrange and not v:IsMagicImmune() and selectedfam:GetAbility(1).cd == 0 and enemyspell.channelTimeTotal-enemyspell.channelTime > 1.2 and enemyspell.channelTime ~= 0 and ticktimer - stuntimer > 1500 then
-			selectedfam:CastAbility(spell)
-			mp:Unselect(selectedfam)
-			mpos = (v.position - selectedfam.position) * (GetDistance2D(selectedfam,v) - 320) / GetDistance2D(selectedfam,v) + selectedfam.position
-			if GetDistance2D(selectedfam,v) > 320 then
-				selectedfam:Move(mpos)
-			end
-			stuntimer = ticktimer
+for b,n in ipairs(enemies) do
+	if n and n.visible and n.alive == true and n.health > 0 then
+		if n:IsChanneling() == true then
+			enemyspell = n:GetChanneledAbility()
+		else 
 			selectedfam = nil
+		end
+		for g,h in ipairs(familiars) do
+			local stone = h:FindModifier("modifier_visage_summon_familiars_stone_form_buff")
+			if not tablefam[h.handle] then
+				tablefam[h.handle] = {}
+			end
+			if not tablefam[h.handle].effectfam and h.alive == true and h.health > 0 then
+				tablefam[h.handle].effectfam = Effect(h,"range_display")
+				tablefam[h.handle].effectfam:SetVector(1,Vector(325,0,0))
+			end
+			if shortest > GetDistance2D(h,n) and h:GetAbility(1).cd == 0 and h.alive == true and h.health > 0 and not stone and (n:IsChanneling() == true and enemyspell and enemyspell ~= nil and enemyspell.channelTime ~= 0) then
+				shortest = GetDistance2D(h,n)
+				selectedfam = h 
+			end
+			if stone and h:GetAbility(1).cd > 24 then
+				mp:SelectAdd(h)
+			end
+		end
+	end
+	if selectedfam ~= nil and selectedfam.alive == true and selectedfam.health > 0 and n and n.visible and n.alive == true and n.health > 0 and n:IsChanneling() == true then
+		local totalrange = selectedfam.movespeed*0.5+rangestun
+		local spell = selectedfam:GetAbility(1)
+		local stone = selectedfam:FindModifier("modifier_visage_summon_familiars_stone_form_buff")
+		if (enemyspell and enemyspell ~= nil and enemyspell.channelTime ~= 0) then
+			if not stone and selectedfam.alive == true and selectedfam.health > 0 and GetDistance2D(selectedfam,n)-totalrange < (enemyspell:GetChannelTime(enemyspell.level)-enemyspell.channelTime-1.3)*selectedfam.movespeed and enemyspell.channelTime ~= 0 and selectedfam:GetAbility(1).cd < ((GetDistance2D(selectedfam,n)-totalrange)/selectedfam.movespeed) and ticktimer - movetimer > 200 and ticktimer - stuntimer > 200 then
+				mp:Unselect(selectedfam)
+				mpos = (n.position - selectedfam.position) * (GetDistance2D(selectedfam,n) - 320)	 / GetDistance2D(selectedfam,n) + selectedfam.position
+				selectedfam:Move(mpos)
+				movetimer = ticktimer
+			end
+			if stone and not selectedfam:GetAbility(1).cd == 0 and selectedfam.alive == true and selectedfam.health > 0 then
+				mp:SelectAdd(selectedfam)
+			end
+			if not stone  and selectedfam.alive == true and selectedfam.health > 0 and GetDistance2D(selectedfam,n) < totalrange and not n:IsMagicImmune() and selectedfam:GetAbility(1).cd == 0 and enemyspell.channelTimeTotal-enemyspell.channelTime > 1.2 and enemyspell.channelTime ~= 0 and ticktimer - stuntimer > 150 then
+				selectedfam:CastAbility(spell)
+				mp:Unselect(selectedfam)
+				mpos = (n.position - selectedfam.position) * (GetDistance2D(selectedfam,n) - 320) / GetDistance2D(selectedfam,n) + selectedfam.position
+				if GetDistance2D(selectedfam,n) > 320 then
+					selectedfam:Move(mpos)
+				end
+				stuntimer = ticktimer
+				selectedfam = nil
+			end
 		end
 	end
 end
