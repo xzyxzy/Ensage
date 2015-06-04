@@ -8,7 +8,7 @@ require("libs.ScriptConfig")
 
 config = ScriptConfig.new()
 config:SetParameter("Activate", "T")
-config:SetParameter("StoneForAll", "G")
+config:SetParameter("StoneForAll", "F")
 config:SetParameter("Xcord", 50)
 config:SetParameter("Ycord", 40)
 config:SetParameter("HpPercentFamiliars", 0.30)
@@ -119,7 +119,7 @@ function Tick(tick)
 				famils[v.handle].vec = Vector(0,0,0)
 			end
 			local spell = v:GetAbility(1)
-			if v.health*(1+v.dmgResist) <= 0.3*v.maxHealth*(1+v.dmgResist) and spell.state ~= LuaEntityAbility.STATE_COOLDOWN and spell.cd == 0 then
+			if v.health*(1+v.dmgResist) <= 0.3*v.maxHealth*(1+v.dmgResist) and spell.cd == 0 then
 				v:CastAbility(spell)
 			end
 			if famils[v.handle].enemy and v:FindModifier("modifier_visage_summon_familiars_stone_form_buff") then
@@ -141,7 +141,7 @@ function Tick(tick)
 						end
 					end
 					local spell = v:GetAbility(1)
-					if spell.state == STATE_READY or (enemy and spell.cd <= shortest/enemy.movespeed) then
+					if spell.cd == 0 or (enemy and spell.cd <= shortest/enemy.movespeed) then
 						if shortest <= range then
 							if not famils[v.handle].enemy or famils[v.handle].enemy.handle ~= enemy.handle then
 								famils[v.handle].enemy = enemy
@@ -157,7 +157,7 @@ function Tick(tick)
 									v:Move(famils[v.handle].vec)
 								end
 								local modif = famils[v.handle].enemy:FindModifier("modifier_stunned")
-								if famils[v.handle].sleept < tick and distance <= 30 and (not modif or modif.remainingTime <= 1.01) and spell.cd == 0 then
+								if famils[v.handle].sleept < tick and distance <= 30 and (not modif or modif.remainingTime <= 1.01) then
 									v:CastAbility(spell)
 									for g,h in ipairs(familiars) do
 										if famils[h.handle].enemy and famils[v.handle].enemy.handle == famils[h.handle].enemy.handle then
@@ -167,9 +167,7 @@ function Tick(tick)
 								end
 							end
 						else
-						if spell.cd == 0 then
 							v:CastAbility(spell)
-							end
 						end
 					end
 				end
