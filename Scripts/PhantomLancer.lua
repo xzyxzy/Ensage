@@ -101,6 +101,14 @@ function Main(tick)
 	if not SleepCheck then 
 		return 
 	end
+	if not (active or attackmode or runmode) then 
+	    if (treads and treads.bootsState ~= 0) then
+			if SleepCheck("resetpt") and not iceblasted then 
+				Sleep(3000,"resetpt")
+				me:SetPowerTreadsState(PT_STR)
+			end
+		end
+	end
 	if me:GetAbility(3).level <= 2 then
 		Range = 750
 	end
@@ -218,7 +226,7 @@ function Main(tick)
 						Sleep(180, "change")
 					end
 				end
-				if me:GetAbility(1):CanBeCasted() and not v:IsMagicImmune() and not rush and SleepCheck("change") and SleepCheck("casting") then
+				if me:GetAbility(1):CanBeCasted() and not v:IsMagicImmune() and not rush and SleepCheck("casting") then
 					if SleepCheck("change") and treads and treads.bootsState ~= 1 and not iceblasted then
 						me:SetPowerTreadsState(PT_INT)
 						Sleep(180, "change")
