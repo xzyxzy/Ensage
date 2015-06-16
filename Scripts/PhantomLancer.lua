@@ -65,7 +65,9 @@ function isAttacking(ent)
 end
 
 function Main(tick)
+	if client.chat or client.console or client.loading then return end
 	local me = entityList:GetMyHero()
+	if not me then return end
 	local Blink = me:GetAbility(2)
 	local rushsleep = nil
 	local arrows = nil
