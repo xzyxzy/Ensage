@@ -128,7 +128,6 @@ function Main(tick)
 		effect:SetVector(1,Vector(drange,0,0))
 	end
 	if me:GetAbility(2).cd < ((30-(me:GetAbility(2).level)*5)-1+(client.latency/3/1000)) and me:GetAbility(2).cd > ((30-(me:GetAbility(2).level)*5)-1.05+(client.latency/3/1000)) and SleepCheck() and not attackmode and not active and not runmode then
-		print(client.latency)
         local alpha = math.atan2(cake.x,cake.y)
         local dAlpha = 2*math.pi/(#illusions + 1)
         me:Move(client.mousePosition)
