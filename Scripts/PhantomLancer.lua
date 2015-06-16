@@ -106,7 +106,7 @@ function Main(tick)
 		return 
 	end
 	if treads and treads.bootsState ~= 0 then
-		if SleepCheck("resetpt") and not iceblasted and not active and not attackmode and not runmode then 
+		if SleepCheck("resetpt") and not iceblasted and not active and not attackmode and not runmode  and not me:IsChanneling() then 
 			me:SetPowerTreadsState(PT_STR)
 			if not iceblasted and not active and not attackmode and not runmode then 
 				Sleep(3000,"resetpt")
