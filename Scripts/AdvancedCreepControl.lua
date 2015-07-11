@@ -601,7 +601,7 @@ class 'Hero'
 						self.heroEntity:SafeCastAbility(impetus, target)
 					else entityList:GetMyPlayer():Attack(target) end
 				else
-					entityList:GetMyPlayer():Attack(target)
+					mp:Attack(Target)
 				end
 			else
 				if self.heroEntity.classId == CDOTA_Unit_Hero_Clinkz then
@@ -610,7 +610,7 @@ class 'Hero'
 						self.heroEntity:SafeCastAbility(searinga, target)
 					else entityList:GetMyPlayer():Attack(target) end
 				else
-					entityList:GetMyPlayer():Attack(target)
+					mp:Attack(Target)
 				end
 			end
 		end
