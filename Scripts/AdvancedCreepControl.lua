@@ -556,7 +556,6 @@ class 'Hero'
 	end 
 
 	function Hero:Hit(target)
-<<<<<<< HEAD
 		local mp = entityList:GetMyPlayer()
 		if target then
 			if target.team ~= self.heroEntity.team then
@@ -614,66 +613,8 @@ class 'Hero'
 					else
 						mp:Attack(target)
 					end
-				end
 			elseif target.team == self.heroEntity.team then
 				mp:Attack(target)
-=======
-		if target and target.team ~= self.heroEntity.team then
-			if target and attackmodifiers and not target:IsMagicImmune() and target.hero then
-				if self.heroEntity.classId == CDOTA_Unit_Hero_Clinkz then
-					local searinga = self.heroEntity:GetAbility(2)
-					if searinga.level > 0 and self.heroEntity.mana > 10 then
-						self.heroEntity:SafeCastAbility(searinga, target)
-					else entityList:GetMyPlayer():Attack(target) end
-				elseif self.heroEntity.classId == CDOTA_Unit_Hero_DrowRanger then
-					local frost = self.heroEntity:GetAbility(1)
-					if frost.level > 0 and self.heroEntity.mana > 12 then
-						self.heroEntity:SafeCastAbility(frost, target)
-					else entityList:GetMyPlayer():Attack(target) end
-				elseif self.heroEntity.classId == CDOTA_Unit_Hero_Viper then
-					local poison = self.heroEntity:GetAbility(1)
-					if poison.level > 0 and self.heroEntity.mana > 21 then
-						self.heroEntity:SafeCastAbility(poison, target)
-					else entityList:GetMyPlayer():Attack(target) end  
-				elseif self.heroEntity.classId == CDOTA_Unit_Hero_Huskar then
-					local burning = self.heroEntity:GetAbility(2)
-					if burning.level > 0 and self.heroEntity.health > 15 then
-						self.heroEntity:SafeCastAbility(burning, target)
-					else entityList:GetMyPlayer():Attack(target) end
-				elseif self.heroEntity.classId == CDOTA_Unit_Hero_Silencer then
-					local glaives = self.heroEntity:GetAbility(2)
-					if glaives.level > 0 and self.heroEntity.mana > 15 then
-						self.heroEntity:SafeCastAbility(glaives, target)
-					else entityList:GetMyPlayer():Attack(target) end
-				elseif self.heroEntity.classId == CDOTA_Unit_Hero_Jakiro then
-					local liquid = self.heroEntity:GetAbility(3)
-					if liquid.level > 0 and liquid.state == LuaEntityAbilty.STATE_READY then
-						self.heroEntity:SafeCastAbility(liquid, target)
-					else entityList:GetMyPlayer():Attack(target) end
-				elseif self.heroEntity.classId == CDOTA_Unit_Hero_Obsidian_Destroyer then
-					local arcane = self.heroEntity:GetAbility(1)
-					if arcane.level > 0 and self.heroEntity.mana > 100 then
-						self.heroEntity:SafeCastAbility(arcane, target)
-					else entityList:GetMyPlayer():Attack(target) end
-				elseif self.heroEntity.classId == CDOTA_Unit_Hero_Enchantress then
-					local impetus = self.heroEntity:GetAbility(4)
-					local impemana = {55,60,65}
-					if impetus.level > 0 and self.heroEntity.mana > impemana[impetus.level] then
-						self.heroEntity:SafeCastAbility(impetus, target)
-					else entityList:GetMyPlayer():Attack(target) end
-				else
-					mp:Attack(target)
-				end
-			else
-				if self.heroEntity.classId == CDOTA_Unit_Hero_Clinkz then
-					local searinga = self.heroEntity:GetAbility(2)
-					if searinga.level > 0 and self.heroEntity.mana > 10 then
-						self.heroEntity:SafeCastAbility(searinga, target)
-					else entityList:GetMyPlayer():Attack(target) end
-				else
-					mp:Attack(target)
-				end
->>>>>>> origin/master
 			end
 		end
 	end
