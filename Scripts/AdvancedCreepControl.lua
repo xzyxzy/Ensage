@@ -613,6 +613,7 @@ class 'Hero'
 					else
 						mp:Attack(target)
 					end
+				end
 			elseif target.team == self.heroEntity.team then
 				mp:Attack(target)
 			end
